@@ -19,10 +19,24 @@ export class CountryService {
     return this.http.get<RESTCountry[]>(`${API_URL}/capital/${query}`)
       .pipe(
         map(RestCountry => CountryMapper.mapRestCountryToCountries(RestCountry)),
-        catchError(error => {
-          console.log(`Error fetching data: ${error}`);
+        catchError(({error}) => {
+          console.log(`Error fetching data: ${error.message}`);
 
           return throwError(() => new Error(`No se pudo encontrar el capital '${query}'`));
+        })
+      );
+  }
+
+  searchByCountry(query: string): Observable<Country[]> {
+    query = query.toLowerCase();
+
+    return this.http.get<RESTCountry[]>(`${API_URL}/name/${query}`)
+      .pipe(
+        map(RestCountry => CountryMapper.mapRestCountryToCountries(RestCountry)),
+        catchError(({error}) => {
+          console.log(`Error fetching data: ${error.message}`);
+
+          return throwError(() => new Error(`No se pudo encontrar el país '${query}'`));
         })
       );
   }
