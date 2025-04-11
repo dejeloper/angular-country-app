@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {inject, Injectable} from '@angular/core';
 import {RESTCountry} from '../interfaces/rest-country.interface';
-import {map, Observable} from 'rxjs';
+import {map, Observable, catchError, throwError} from 'rxjs';
 import {Country} from '../interfaces/country.interface';
 import {CountryMapper} from '../mappers/country.mapper';
 
@@ -18,7 +18,12 @@ export class CountryService {
 
     return this.http.get<RESTCountry[]>(`${API_URL}/capital/${query}`)
       .pipe(
-        map(RestCountry => CountryMapper.mapRestCountryToCountries(RestCountry))
+        map(RestCountry => CountryMapper.mapRestCountryToCountries(RestCountry)),
+        catchError(error => {
+          console.log(`Error fetching data: ${error}`);
+
+          return throwError(() => new Error(`No se pudo encontrar el capital '${query}'`));
+        })
       );
   }
 }

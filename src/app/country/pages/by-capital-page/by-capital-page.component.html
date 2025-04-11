@@ -3,4 +3,12 @@
   (value)="onSearch($event)"
 />
 
+@if (isError()){
+<div class="alert alert-error">
+  <div class="flex-1">
+    <p>{{ isError() }}</p>
+  </div>
+</div>
+}
+
 <country-list [countries]="countries()" />
