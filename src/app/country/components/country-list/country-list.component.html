@@ -39,6 +39,28 @@
         </td>
       </tr>
       }
+      <!-- Error -->
+      @if (errorMessage()){
+      <tr>
+        <td colspan="8" class="text-center">
+          {{ errorMessage() }}
+        </td>
+      </tr>
+      }
+      <!-- Empty -->
+      @if (countries().length === 0 && !isLoading()){
+      <tr>
+        <td colspan="8" class="text-center">
+          No hay resultados para esta búsqueda
+        </td>
+      </tr>
+      }
+      <!-- Loading -->
+      @if (isLoading()){
+      <tr>
+        <td colspan="8" class="text-center">Buscando info...</td>
+      </tr>
+      }
     </tbody>
   </table>
 </section>
