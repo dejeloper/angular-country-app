@@ -3,7 +3,7 @@ import {CountryLayoutComponent} from "./layouts/CountryLayout/CountryLayout.comp
 import {ByCapitalPageComponent} from "./pages/by-capital-page/by-capital-page.component";
 import {ByCountryPageComponent} from "./pages/by-country-page/by-country-page.component";
 import {ByRegionPageComponent} from "./pages/by-region-page/by-region-page.component";
-import {ByPageComponent} from "./pages/by-page/by-page.component";
+import {CountryPageComponent} from "./pages/country-page/country-page.component";
 
 const countryRoutes: Routes = [
   {
@@ -24,7 +24,7 @@ const countryRoutes: Routes = [
       },
       {
         path: 'by/:code',
-        component: ByPageComponent
+        component: CountryPageComponent
       },
       {
         path: '**',
