@@ -1,0 +1,44 @@
+<section class="flex flex-row gap-2 mt-5 justify-center">
+  <table class="table table-md mt-2 w-full">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Icono</th>
+        <th>Bandera</th>
+        <th>Nombre</th>
+        <th>Capital</th>
+        <th>Población</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (country of countries(); track country.cca2; let index = $index){
+      <tr>
+        <td>{{ index + 1 }}</td>
+        <td>{{ country.flag }}</td>
+        <td>
+          <img
+            [src]="country.flagSvg"
+            [alt]="country.name"
+            class="w-16 h-10 rounded border border-base-content/20"
+          />
+        </td>
+        <td>{{ country.nameSpanish }}</td>
+        <td>{{ country.capital }}</td>
+        <td>
+          <span class="badge badge-accent badge-lg">
+            {{ country.population | number }}
+          </span>
+        </td>
+        <td>
+          <a
+            class="btn btn-outline btn-info"
+            routerLink="/country/by/{{ country.cca2 }}"
+            >Más Información</a
+          >
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</section>
