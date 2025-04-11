@@ -42,4 +42,20 @@ export class CountryService {
         })
       );
   }
+
+  searchCountryByCode(code: string) {
+    const url = `${API_URL}/alpha/${code}`;
+
+    return this.http.get<RESTCountry[]>(url)
+      .pipe(
+        map(RestCountry => CountryMapper.mapRestCountryToCountries(RestCountry)),
+        map(countries => countries.at(0)),
+        delay(300),
+        catchError(({error}) => {
+          console.log(`Error fetching data: ${error.message}`);
+
+          return throwError(() => new Error(`No se pudo encontrar el país con ese código '${code}'`));
+        })
+      );
+  }
 }
