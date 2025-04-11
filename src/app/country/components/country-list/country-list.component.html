@@ -33,7 +33,7 @@
         <td>
           <a
             class="btn btn-outline btn-info"
-            routerLink="/country/by/{{ country.cca2 }}"
+            [routerLink]="['/country/by/', country.cca2]"
             >Más Información</a
           >
         </td>
