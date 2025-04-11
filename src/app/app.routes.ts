@@ -7,6 +7,10 @@ export const routes: Routes = [
     component: HomePageComponent
   },
   {
+    path: 'country',
+    loadChildren: () => import('./country/country.routes')
+  },
+  {
     path: '**',
     redirectTo: ''
   }
