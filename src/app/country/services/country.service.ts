@@ -4,6 +4,7 @@ import {RESTCountry} from '../interfaces/rest-country.interface';
 import {map, Observable, catchError, throwError, delay, of, tap} from 'rxjs';
 import {Country} from '../interfaces/country.interface';
 import {CountryMapper} from '../mappers/country.mapper';
+import {Region} from '../interfaces/region.type';
 
 const API_URL = 'https://restcountries.com/v3.1';
 
@@ -13,6 +14,7 @@ export class CountryService {
   private http = inject(HttpClient);
   private queryCacheCapital = new Map<string, Country[]>();
   private queryCacheCountry = new Map<string, Country[]>();
+  private queryCacheRegion = new Map<Region, Country[]>();
 
   searchByCapital(query: string): Observable<Country[]> {
     query = query.toLowerCase();
@@ -68,6 +70,26 @@ export class CountryService {
           console.log(`Error fetching data: ${error.message}`);
 
           return throwError(() => new Error(`No se pudo encontrar el país con ese código '${code}'`));
+        })
+      );
+  }
+
+  searchByRegion(region: Region): Observable<Country[]> {
+    const url = `${API_URL}/region/${region}`;
+
+    if (this.queryCacheRegion.has(region)) {
+      return of(this.queryCacheRegion.get(region) ?? []);
+    }
+
+    return this.http.get<RESTCountry[]>(url)
+      .pipe(
+        map(RestCountry => CountryMapper.mapRestCountryToCountries(RestCountry)),
+        tap((countries) => this.queryCacheRegion.set(region, countries)),
+        delay(300),
+        catchError(({error}) => {
+          console.log(`Error fetching data: ${error.message}`);
+
+          return throwError(() => new Error(`No se pudo encontrar ningún país por region '${region}'`));
         })
       );
   }
