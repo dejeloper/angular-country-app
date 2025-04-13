@@ -1,38 +1,49 @@
-<section class="flex flex-row gap-2 mt-5 justify-center">
-  <table class="table table-md mt-2 w-full">
-    <thead>
+<section class="overflow-x-auto shadow-md sm:rounded-lg mt-5">
+  <table class="w-full text-sm text-left text-gray-500">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
       <tr>
-        <th>#</th>
-        <th>Icono</th>
-        <th>Bandera</th>
-        <th>Nombre</th>
-        <th>Capital</th>
-        <th>Población</th>
-        <th></th>
+        <th scope="col" class="px-6 py-3">#</th>
+        <th scope="col" class="px-6 py-3">Icono</th>
+        <th scope="col" class="px-6 py-3">Bandera</th>
+        <th scope="col" class="px-6 py-3">Nombre</th>
+        <th scope="col" class="px-6 py-3">Capital</th>
+        <th scope="col" class="px-6 py-3">Población</th>
+        <th scope="col" class="px-6 py-3">Región</th>
+        <th scope="col" class="px-6 py-3">Subregión</th>
+        <th scope="col" class="px-6 py-3">
+          <span class="sr-only">Actions</span>
+        </th>
       </tr>
     </thead>
     <tbody>
       @for (country of countries(); track country.cca2; let index = $index){
-      <tr>
-        <td>{{ index + 1 }}</td>
-        <td>{{ country.flag }}</td>
-        <td>
+      <tr class="bg-slate-100 hover:bg-gray-300">
+        <th
+          scope="row"
+          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+        >
+          {{ index + 1 }}
+        </th>
+        <td class="px-6 py-4">{{ country.flag }}</td>
+        <td class="px-6 py-4">
           <img
             [src]="country.flagSvg"
             [alt]="country.name"
             class="w-16 h-10 rounded border border-base-content/20"
           />
         </td>
-        <td>{{ country.nameSpanish }}</td>
-        <td>{{ country.capital }}</td>
-        <td>
+        <td class="px-6 py-4">{{ country.nameSpanish }}</td>
+        <td class="px-6 py-4">{{ country.capital }}</td>
+        <td class="px-6 py-4">
           <span class="badge badge-accent badge-lg">
             {{ country.population | number }}
           </span>
         </td>
-        <td>
+        <td class="px-6 py-4">{{ country.region }}</td>
+        <td class="px-6 py-4">{{ country.subRegion }}</td>
+        <td class="px-6 py-4 text-left">
           <a
-            class="btn btn-outline btn-info"
+            class="btn btn-outline btn-info min-w-36"
             [routerLink]="['/country/by/', country.cca2]"
             >Más Información</a
           >
@@ -42,7 +53,7 @@
       <!-- Error -->
       @if (errorMessage()){
       <tr>
-        <td colspan="8" class="text-center">
+        <td colspan="10" class="py-4 px-4 md:px-0 md:text-center">
           {{ errorMessage() }}
         </td>
       </tr>
@@ -50,7 +61,7 @@
       <!-- Empty -->
       @if (countries().length === 0 && !isLoading()){
       <tr>
-        <td colspan="8" class="text-center">
+        <td colspan="10" class="py-4 px-4 md:px-0 md:text-center">
           No hay resultados para esta búsqueda
         </td>
       </tr>
@@ -58,7 +69,9 @@
       <!-- Loading -->
       @if (isLoading()){
       <tr>
-        <td colspan="8" class="text-center">Buscando info...</td>
+        <td colspan="10" class="py-4 px-4 md:px-0 md:text-center">
+          Buscando info...
+        </td>
       </tr>
       }
     </tbody>
