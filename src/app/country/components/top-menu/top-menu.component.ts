@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 
 @Component({
@@ -6,4 +6,11 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
   imports: [RouterLink, RouterLinkActive],
   templateUrl: './top-menu.component.html',
 })
-export class TopMenuComponent { }
+export class TopMenuComponent {
+  isOpen = signal(false);
+
+  toggleMenu() {
+    this.isOpen.set(!this.isOpen());
+  }
+
+}
